@@ -13,49 +13,46 @@ import entities.enums.PedidoStatus;
 
 public class application {
 
-	public static void main(String[] args) throws ParseException {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Scanner sc = new Scanner(System.in);
+	public static void main(String[] args) {
 
-		System.out.println("Entre com os Dados do cliente: ");
-		System.out.print("Nome: ");
-		String nome = sc.nextLine();
-		System.out.print("Email: ");
-		String email = sc.next();
-		System.out.print("Aniversario  Dia/Mï¿½s/Ano: ");
-		Date aniversario = sdf.parse(sc.next());
-
-		Cliente cliente = new Cliente(nome, email, aniversario);
-
-		System.out.println("Informe os dados do Pedido: ");
-		System.out.print("Status do Pedido: ");
-		PedidoStatus status = PedidoStatus.valueOf(sc.next());
-
-		Pedido pedido = new Pedido(new Date(), status, cliente);
-
-		System.out.print("Quantos itens para esta compra? ");
-		int n = sc.nextInt();
-
-		for (int i = 1; i <= n; i++) {
-			System.out.println("Digite os dados do " + i + "ï¿½ item: ");
-			System.out.print("Nome do produto ");
-			sc.nextLine();
-			String produtoNome = sc.nextLine();
-			System.out.print("Digite o Preï¿½o do produto: ");
-			Double produtoPreco = sc.nextDouble();
-			System.out.print("Quantidade: ");
-			int quantidade = sc.nextInt();
-
-			Produto produto = new Produto(produtoNome, produtoPreco);
-
-			OrdemPedido op = new OrdemPedido(quantidade, produtoPreco, produto);
-
-			pedido.addItem(op);
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			Scanner sc = new Scanner(System.in);
+			System.out.println("Entre com os Dados do cliente: ");
+			System.out.print("Nome: ");
+			String nome = sc.nextLine();
+			System.out.print("Email: ");
+			String email = sc.next();
+			System.out.print("Aniversario  dd/MM/yy: ");
+			Date aniversario = sdf.parse(sc.next());
+			Cliente cliente = new Cliente(nome, email, aniversario);
+			System.out.println("Informe os dados do Pedido: ");
+			System.out.print("Status do Pedido: ");
+			PedidoStatus status = PedidoStatus.valueOf(sc.next());
+			Pedido pedido = new Pedido(new Date(), status, cliente);
+			System.out.print("Quantos itens para esta compra? ");
+			int n = sc.nextInt();
+			for (int i = 1; i <= n; i++) {
+				System.out.println("Digite os dados do " + i + "ï¿½ item: ");
+				System.out.print("Nome do produto ");
+				sc.nextLine();
+				String produtoNome = sc.nextLine();
+				System.out.print("Digite o Preço do produto: ");
+				Double produtoPreco = sc.nextDouble();
+				System.out.print("Quantidade: ");
+				int quantidade = sc.nextInt();
+				Produto produto = new Produto(produtoNome, produtoPreco);
+				OrdemPedido op = new OrdemPedido(quantidade, produtoPreco, produto);
+				pedido.addItem(op);
+			}
+			System.out.println();
+			System.out.println(pedido);
+			sc.close();
+		} catch (ParseException e) {
+			System.out.println("Data Invalida!");
+		} catch (IllegalArgumentException e) {
+			System.out.println("Status digitado não existente!");
 		}
-
-		System.out.println();
-		System.out.println(pedido);
-		sc.close();
 	}
 
 }
